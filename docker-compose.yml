@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodbdata:/data/db
+  app:
+    image: client-server
+    depends_on:
+      - mongo
+    ports:
+      - 5000:5000
+    stdin_open: true
+    tty: true
+volumes:
+  mongodbdata:
