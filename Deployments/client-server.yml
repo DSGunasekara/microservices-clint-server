@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-server
+  labels:
+    app: client-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-server
+  template:
+    metadata:
+      labels:
+        app: client-server
+    spec:
+      containers:
+      - name: client-server
+        image: adsg3160/client-server
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-server-service
+spec:
+  selector:
+    app: client-server
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30000
